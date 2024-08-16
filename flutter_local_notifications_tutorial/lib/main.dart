@@ -55,10 +55,39 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       home: Scaffold(
-        body: new Center(
-          child: new InkWell(
-              child: new Text('Survey App'),
-              onTap: () => launch('https://forms.gle/CU7Pxo7rAwTndDC27')),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 180),
+              const Text(
+                'Please complete your survey!',
+                style: TextStyle(fontSize: 24),
+              ),
+              const SizedBox(height: 50),
+              ElevatedButton(
+                onPressed: () => _launchUrl('https://forms.gle/CU7Pxo7rAwTndDC27'),
+                child: const SizedBox(
+                  width: 150,
+                  child: Center(
+                    child: Text('Survey Link'))),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () => _launchUrl('https://forms.gle/CU7Pxo7rAwTndDC27'),
+                child: const SizedBox(
+                  width: 150,
+                  child: Center(
+                    child: Text('Sleep Survey Link'))),
+              ),
+              const Spacer(),
+              const Text(
+                'Thank you! 🙏',
+                style: TextStyle(fontSize: 24),
+              ),
+              const SizedBox(height: 100),
+            ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -70,14 +99,18 @@ class _MyAppState extends State<MyApp> {
                   body: "Please fill out the following survey"),
             );
           },
-          child: Icon(
+          child: const Icon(
             Icons.notification_add,
           ),
         ),
       ),
-      //  const Center(
-      //       child: Text('Flutter'),
-      //     ),
     );
+  }
+
+  void _launchUrl(String urlString) async {
+    final Uri url = Uri.parse(urlString);
+    if (!await launchUrl(url)) {
+      throw 'Could not launch $url';
+    }
   }
 }
