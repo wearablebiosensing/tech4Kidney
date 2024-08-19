@@ -2,27 +2,55 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications_tutorial/notification_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 void main() async {
-  await AwesomeNotifications().initialize(null, [
-    NotificationChannel(
-      channelGroupKey: "basic_channel_group",
-      channelKey: "basic_channel",
-      channelName: "Basic Notification",
-      channelDescription: "Basic notifications channel",
-    )
-  ], channelGroups: [
-    NotificationChannelGroup(
-      channelGroupKey: "basic_channel_group",
-      channelGroupName: "Basic Group",
-    )
-  ]);
+  WidgetsFlutterBinding.ensureInitialized();
+
   bool isAllowedToSendNotification =
-      await AwesomeNotifications().isNotificationAllowed();
+    await AwesomeNotifications().isNotificationAllowed();
   if (!isAllowedToSendNotification) {
     AwesomeNotifications().requestPermissionToSendNotifications();
   }
+
+  await AwesomeNotifications().initialize(
+    'resource://drawable/res_app_icon',
+    [
+      NotificationChannel(
+        channelKey: 'daily_notification_channel',
+        channelName: 'Daily Survey Notifications',
+        channelDescription: 'Notification channel for daily survey reminders',
+        defaultColor: const Color(0xFF9D50DD),
+        ledColor: Colors.white,
+        importance: NotificationImportance.High,
+      ),
+    ],
+  );
+
+  tz.initializeTimeZones();
+  tz.setLocalLocation(tz.getLocation('America/New_York'));
   runApp(const MyApp());
+}
+
+void scheduleDailyNotification() {
+  AwesomeNotifications().createNotification(
+    content: NotificationContent(
+      id: 0,
+      channelKey: 'daily_notification_channel',
+      title: 'KidneyCareWear',
+      body: 'Please take your daily survey!',
+      notificationLayout: NotificationLayout.Default,
+    ),
+    schedule: NotificationCalendar(
+      hour: 9,
+      minute: 0,
+      second: 0,
+      millisecond: 0,
+      repeats: true,
+      timeZone: tz.local.name, // Ensure this matches the user's timezone
+    ),
+  );
 }
 
 class WelcomePage extends StatelessWidget {
@@ -125,20 +153,6 @@ class SurveyPage extends StatelessWidget {
             ),
             const SizedBox(height: 100),
           ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          AwesomeNotifications().createNotification(
-            content: NotificationContent(
-                id: 1,
-                channelKey: "basic_channel",
-                title: "Welcome to Sleep Survey App",
-                body: "Please fill out the following survey"),
-          );
-        },
-        child: const Icon(
-          Icons.notification_add,
         ),
       ),
     );
