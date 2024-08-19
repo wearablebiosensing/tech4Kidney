@@ -9,7 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   bool isAllowedToSendNotification =
-    await AwesomeNotifications().isNotificationAllowed();
+      await AwesomeNotifications().isNotificationAllowed();
   if (!isAllowedToSendNotification) {
     AwesomeNotifications().requestPermissionToSendNotifications();
   }
@@ -30,6 +30,7 @@ void main() async {
 
   tz.initializeTimeZones();
   tz.setLocalLocation(tz.getLocation('America/New_York'));
+  scheduleDailyNotification();
   runApp(const MyApp());
 }
 
@@ -69,17 +70,23 @@ class WelcomePage extends StatelessWidget {
             const SizedBox(height: 100),
             const Text(
               'Welcome!',
-              style: TextStyle(fontSize: 35, color: Color.fromARGB(255, 255, 159, 152), fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 35,
+                  color: Color.fromARGB(255, 255, 159, 152),
+                  fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             Image.asset(
               'assets/kidney_image.png',
-              width: 0.7*screenWidth,
-              height: 0.7*screenWidth,
+              width: 0.7 * screenWidth,
+              height: 0.7 * screenWidth,
             ),
             const Text(
               'KidneyCareWear',
-              style: TextStyle(fontSize: 35, color: Color.fromARGB(255, 255, 159, 152), fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 35,
+                  color: Color.fromARGB(255, 255, 159, 152),
+                  fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 50),
             ElevatedButton(
@@ -89,23 +96,30 @@ class WelcomePage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const SurveyPage()),
                 );
               },
-                style: ElevatedButton.styleFrom(
-                minimumSize: const Size(150, 60), // Set the minimum width and height for the button
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(
+                    150, 60), // Set the minimum width and height for the button
               ),
               child: const Text(
                 'Start',
                 style: TextStyle(fontSize: 24),
-                ),
+              ),
             ),
             const Spacer(),
             const Text(
               'Thank you for participating!',
-              style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 112, 112, 112), fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Color.fromARGB(255, 112, 112, 112),
+                  fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 5),
             const Text(
               'Link to consent form',
-              style: TextStyle(fontSize: 15, color: Colors.blue, decoration: TextDecoration.underline),
+              style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline),
             ),
             const SizedBox(height: 25),
           ],
@@ -132,19 +146,17 @@ class SurveyPage extends StatelessWidget {
             ),
             const SizedBox(height: 50),
             ElevatedButton(
-              onPressed: () => _launchUrl('https://forms.gle/CU7Pxo7rAwTndDC27'),
+              onPressed: () =>
+                  _launchUrl('https://forms.gle/CU7Pxo7rAwTndDC27'),
               child: const SizedBox(
-                  width: 150,
-                  child: Center(
-                      child: Text('Survey Link'))),
+                  width: 150, child: Center(child: Text('Survey Link'))),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => _launchUrl('https://forms.gle/CU7Pxo7rAwTndDC27'),
+              onPressed: () =>
+                  _launchUrl('https://forms.gle/CU7Pxo7rAwTndDC27'),
               child: const SizedBox(
-                  width: 150,
-                  child: Center(
-                      child: Text('Sleep Survey Link'))),
+                  width: 150, child: Center(child: Text('Sleep Survey Link'))),
             ),
             const Spacer(),
             const Text(
@@ -192,7 +204,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Tech4Kidney',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor:const Color.fromARGB(255, 255, 159, 152)),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 255, 159, 152)),
         useMaterial3: true,
       ),
       home: const WelcomePage(),
