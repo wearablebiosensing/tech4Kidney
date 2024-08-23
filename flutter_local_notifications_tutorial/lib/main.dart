@@ -1,6 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications_tutorial/notification_controller.dart';
+import 'package:KidneyCareWear/notification_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -32,6 +32,18 @@ void main() async {
   tz.setLocalLocation(tz.getLocation('America/New_York'));
   scheduleDailyNotification();
   runApp(const MyApp());
+
+  // Send a notification as soon as the app opens
+  AwesomeNotifications().createNotification(
+    content: NotificationContent(
+      id: 1,
+      channelKey: 'daily_notification_channel',
+      title: 'Welcome to KidneyCareWear',
+      body: 'Thank you for opening the app!',
+      notificationLayout: NotificationLayout.Default,
+      icon: 'resource://drawable/black_kidney',
+    ),
+  );
 }
 
 void scheduleDailyNotification() {
@@ -42,6 +54,7 @@ void scheduleDailyNotification() {
       title: 'KidneyCareWear',
       body: 'Please take your daily survey!',
       notificationLayout: NotificationLayout.Default,
+      icon: 'resource://drawable/black_kidney',
     ),
     schedule: NotificationCalendar(
       hour: 9,
@@ -49,7 +62,7 @@ void scheduleDailyNotification() {
       second: 0,
       millisecond: 0,
       repeats: true,
-      timeZone: tz.local.name, // Ensure this matches the user's timezone
+      timeZone: 'America/New_York',
     ),
   );
 }
@@ -60,6 +73,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    print(screenWidth);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF6ECED),
