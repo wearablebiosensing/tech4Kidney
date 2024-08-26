@@ -38,7 +38,7 @@ void main() async {
       id: 1,
       channelKey: 'daily_notification_channel',
       title: 'Welcome to KidneyCareWear',
-      body: 'Thank you for opening the app!',
+      body: 'Please take your daily survey!',
       notificationLayout: NotificationLayout.Default,
       icon: 'resource://drawable/black_kidney',
     ),
@@ -72,7 +72,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    print(screenWidth);
+    double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: const Color(0xFFF6ECED),
@@ -80,12 +80,12 @@ class WelcomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 100),
+            SizedBox(height: (0.13*screenHeight)),
             const Text(
-              'Welcome!',
+              'Welcome to:',
               style: TextStyle(fontSize: 35, color: Color.fromARGB(255, 255, 159, 152), fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 0.01*screenHeight),
             Image.asset(
               'assets/kidney_image.png',
               width: 0.7*screenWidth,
@@ -95,7 +95,7 @@ class WelcomePage extends StatelessWidget {
               'KidneyCareWear',
               style: TextStyle(fontSize: 35, color: Color.fromARGB(255, 255, 159, 152), fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 50),
+            SizedBox(height: 0.07*screenHeight),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -116,12 +116,12 @@ class WelcomePage extends StatelessWidget {
               'Thank you for participating!',
               style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 112, 112, 112), fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 5),
+            SizedBox(height: 0.01*screenHeight),
             const Text(
               'Link to consent form',
               style: TextStyle(fontSize: 15, color: Colors.blue, decoration: TextDecoration.underline),
             ),
-            const SizedBox(height: 25),
+            SizedBox(height: 0.05*screenHeight),
           ],
         ),
       ),
@@ -134,17 +134,20 @@ class SurveyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 180),
+            SizedBox(height: 0.08*screenHeight),
             const Text(
               'Please complete your survey!',
               style: TextStyle(fontSize: 24),
             ),
-            const SizedBox(height: 50),
+            SizedBox(height: 0.2*screenHeight),
             ElevatedButton(
               onPressed: () => _launchUrl('https://forms.gle/CU7Pxo7rAwTndDC27'),
               child: const SizedBox(
@@ -152,7 +155,7 @@ class SurveyPage extends StatelessWidget {
                   child: Center(
                       child: Text('Survey Link'))),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 0.05*screenHeight),
             ElevatedButton(
               onPressed: () => _launchUrl('https://forms.gle/CU7Pxo7rAwTndDC27'),
               child: const SizedBox(
@@ -160,12 +163,11 @@ class SurveyPage extends StatelessWidget {
                   child: Center(
                       child: Text('Sleep Survey Link'))),
             ),
-            const Spacer(),
+            SizedBox(height: 0.2*screenHeight),
             const Text(
               'Thank you! 🙏',
               style: TextStyle(fontSize: 24),
             ),
-            const SizedBox(height: 100),
           ],
         ),
       ),
